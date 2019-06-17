@@ -1,0 +1,58 @@
+<div fxLayoutAlign="center center">
+  <mat-form-field fxFlex="40%">
+      <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Filter">
+  </mat-form-field>
+</div>
+
+<mat-table [dataSource]="dataSource" matSort fxflex.xs="100%">
+
+<ng-container matColumnDef="title">
+  <mat-header-cell *matHeaderCellDef mat-sort-header>Title</mat-header-cell>
+  <mat-cell *matCellDef="let element"> {{ element.title }} </mat-cell>
+</ng-container>
+
+<ng-container matColumnDef="price">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Price</mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{ element.price | currency }} </mat-cell>
+</ng-container>
+
+<ng-container matColumnDef="category">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Category</mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{ element.category }} </mat-cell>
+</ng-container>
+
+<ng-container matColumnDef="imageURL">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Image</mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      <img class="productImage" mat-card-image [src]="element.imageURL" [alt]="" fxflex.xs="100%" fxFlex="125px">
+    </mat-cell>
+</ng-container>
+
+<!-- Can put an ngIf=user.isAdmin to make this form reusable later -->
+<ng-container matColumnDef="edit">
+  <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
+  <mat-cell *matCellDef="let element">
+    <a 
+      fxLayoutAlign="center center"
+      [routerLink]="['/admin/products/', element.id]"
+      >Edit
+    </a> 
+  </mat-cell>
+</ng-container>
+
+<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+<mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+</mat-table>
+
+<mat-paginator
+  [pageSize]="5"
+  [pageSizeOptions]="[5, 10, 20]">
+</mat-paginator>
+
+
+<a 
+  class="button" mat-raised-button color="primary"
+  [routerLink]="['/admin/products/new']"
+  >New Product
+</a>

@@ -1,0 +1,20 @@
+<section>
+
+  <!-- TODO: Make this sticky to the side -->
+  <section class="container" fxLayout="row wrap" fxLayoutWrap="wrap" fxLayout.xs="column wrap" fxLayoutGap="5.0%" flayoutAlign="center">
+    <!-- passign category like this can totally be done via store -->
+    <app-product-filter [selectedCategory]="selectedCategory"></app-product-filter> 
+  </section>
+
+  <section class="container" fxLayout="row wrap" fxLayoutWrap="wrap" fxLayout.xs="column wrap" fxLayoutGap="5.0%" flayoutAlign="center">
+    <app-product-card 
+      *ngFor="let product of filteredProducts"
+      [product]="product"
+      [shopping-cart]="cart"
+      class="" 
+      fxFlex.gt-xs="45%" 
+      fxFlex.gt-md="28%">
+    </app-product-card>
+  </section>
+
+</section>

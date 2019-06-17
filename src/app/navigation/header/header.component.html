@@ -1,0 +1,79 @@
+<mat-toolbar color="primary" style="margin-bottom: 10px">
+  <div fxHide.gt-xs>
+    <button mat-icon-button (click)="onToggleSideNav()">
+        <mat-icon>menu</mat-icon>
+    </button>
+  </div>
+  <div><a [routerLink]="['/']" style="font-size: 25px;">NG Grocery</a></div>
+  <div fxFlex fxLayout fxLayoutAlign="flex-end" fxHide.xs>
+    <ul fxLayout fxLayoutGap="10px" class="navigation-items">
+      
+      <li 
+        *ngIf="authService.user$ | async">
+        <a [routerLink]="['/shopping-cart']">
+          <span
+            *ngIf="cart$ | async as cart" 
+            matBadge="{{ cart.shoppingCartItemCount }}" 
+            matBadgeOverlap="false"
+            matBadgeColor="warn"
+            >Shopping Cart
+          </span> 
+        </a>
+      </li>
+
+      <ng-template #loginOrRegister>
+        <li ><a [routerLink]="['/signup']">Signup</a></li>
+        <li ><a [routerLink]="['/login']">Login</a></li>
+      </ng-template>
+      
+
+      <!-- Dropdown for list of logged in user actions -->
+      <span *ngIf="authService.user$ | async as user; else loginOrRegister">
+          <button 
+            mat-button 
+            [matMenuTriggerFor]="userDropdown" 
+            #menuTrigger="matMenuTrigger" 
+            (mouseover)="menuTrigger.openMenu()"
+            style="outline: none;"
+            id="settingsHeaderNav"
+            >
+            <span>{{ user.displayName }}</span>
+          </button>
+          <mat-menu #userDropdown="matMenu" [overlapTrigger]="false">
+            <span (mouseleave)="menuTrigger.closeMenu()">
+
+              <button mat-menu-item [routerLink]="['/']">
+                <span>Home</span>
+              </button>
+
+              <button mat-menu-item [routerLink]="['/orders']">
+                <span>My Orders</span>
+              </button>
+
+              <ng-container *ngIf="user.isAdmin">
+
+                <button mat-menu-item [routerLink]="['/admin']">
+                  <span>Admin Dashboard</span>
+                </button>
+
+                <button mat-menu-item [routerLink]="['/admin/orders']">
+                  <span>Manage Orders</span>
+                </button>
+  
+                <button mat-menu-item [routerLink]="['/admin/products']">
+                  <span>Manage Products</span>
+                </button>
+              </ng-container>
+
+              <button mat-menu-item (click)="authService.signOut()">
+                <span>Logout</span>
+              </button>
+
+            </span>
+          </mat-menu>
+        </span>
+    </ul>
+  </div>
+</mat-toolbar>
+
+

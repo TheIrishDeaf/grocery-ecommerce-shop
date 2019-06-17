@@ -1,0 +1,3 @@
+<button mat-raised-button color="accent" fxLayoutAlign="left" fxFlex="10%" fx (click)="removeFromCart()" [disabled]="getQuantityInCart() === 0">-</button>
+<div fxLayoutAlign="center" fxFlex="80%"> {{ getQuantityInCart() }} in cart </div>
+<button mat-raised-button color="accent" fxLayoutAlign="right" fxFlex="10%" (click)="addToCart()">+</button>

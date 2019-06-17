@@ -1,0 +1,22 @@
+<section style="position: sticky">
+  <mat-card fxFlex.gt-xs="45%" fxFlex.gt-md="28%">
+    <mat-action-list class="">
+      <mat-list-item>
+        <a
+        routerLink="/products"
+        > All Categories
+        </a>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item *ngFor="let category of categories$ | async" value="category.id" >
+        <a
+          routerLink="/products"
+          [queryParams]="{ selectedCategory: category.id }"
+          [class.active] = "selectedCategory === category.id"
+          >{{ category.name }}
+        </a>
+        <mat-divider></mat-divider>
+      </mat-list-item>
+    </mat-action-list> 
+  </mat-card>      
+</section>  
